@@ -1,0 +1,222 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Swaraz Spices Brand Colors */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 13%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 13%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 13%;
+
+    /* Primary - Swaraz Red */
+    --primary: 0 79% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary - Warm Yellow/Gold */
+    --secondary: 45 100% 51%;
+    --secondary-foreground: 0 0% 13%;
+
+    /* Green accent */
+    --accent: 120 61% 34%;
+    --accent-foreground: 0 0% 100%;
+
+    --muted: 40 20% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 79% 50%;
+
+    --radius: 0.5rem;
+
+    /* Custom brand colors */
+    --swaraz-red: 0 79% 50%;
+    --swaraz-dark-red: 0 79% 40%;
+    --swaraz-yellow: 45 100% 51%;
+    --swaraz-gold: 38 92% 50%;
+    --swaraz-green: 120 61% 34%;
+    --swaraz-cream: 40 33% 96%;
+    --swaraz-dark: 0 0% 13%;
+    --swaraz-gray: 0 0% 45%;
+    --swaraz-light-gray: 0 0% 96%;
+    --swaraz-orange: 25 95% 53%;
+
+    /* Footer bg */
+    --footer-bg: 40 20% 95%;
+  }
+
+  .dark {
+    --background: 0 0% 13%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 17%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 17%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 79% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 45 100% 51%;
+    --secondary-foreground: 0 0% 13%;
+
+    --muted: 0 0% 25%;
+    --muted-foreground: 0 0% 65%;
+
+    --accent: 120 61% 34%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 25%;
+    --input: 0 0% 25%;
+    --ring: 0 79% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+@layer components {
+  .swaraz-container {
+    @apply max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .swaraz-section {
+    @apply py-12 lg:py-16;
+  }
+
+  .swaraz-heading {
+    @apply text-2xl md:text-3xl lg:text-4xl font-bold text-foreground;
+  }
+
+  .swaraz-subheading {
+    @apply text-lg md:text-xl text-muted-foreground;
+  }
+
+  .swaraz-card {
+    @apply bg-card rounded-lg shadow-sm border border-border overflow-hidden transition-all duration-300 hover:shadow-lg;
+  }
+
+  .swaraz-btn-primary {
+    @apply bg-primary text-primary-foreground px-6 py-3 rounded-md font-semibold transition-all duration-300 hover:opacity-90;
+  }
+
+  .swaraz-btn-secondary {
+    @apply bg-secondary text-secondary-foreground px-6 py-3 rounded-md font-semibold transition-all duration-300 hover:opacity-90;
+  }
+
+  .nav-link {
+    @apply text-foreground hover:text-primary transition-colors duration-200 font-medium;
+  }
+
+  .nav-link-active {
+    @apply text-primary font-semibold;
+  }
+
+  .category-card {
+    @apply relative overflow-hidden rounded-lg cursor-pointer transition-transform duration-300 hover:scale-105;
+  }
+
+  .product-card {
+    @apply bg-card rounded-lg border border-border overflow-hidden transition-all duration-300 hover:shadow-xl;
+  }
+
+  .product-card:hover .product-image {
+    @apply scale-105;
+  }
+
+  .product-image {
+    @apply transition-transform duration-500;
+  }
+
+  .footer-section {
+    @apply bg-[hsl(var(--footer-bg))];
+  }
+
+  .combo-box-btn {
+    @apply text-primary font-semibold hover:underline;
+  }
+
+  .feature-icon {
+    @apply w-16 h-16 text-primary;
+  }
+
+  .badge-stock {
+    @apply text-xs font-medium text-green-600;
+  }
+
+  .price-text {
+    @apply text-lg font-bold text-foreground;
+  }
+
+  .price-original {
+    @apply text-sm text-muted-foreground line-through;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.5s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
