@@ -12,8 +12,6 @@ import categoryPastes from '@/assets/category-pastes.jpg';
 
 const weights = ['25g', '50g', '100g', '200g', '300g', '500g', '1kg'];
 
-const weights = ['25g', '50g', '100g', '200g', '300g', '500g', '1kg'];
-
 // Convert weight string to grams
 const convertToGrams = (weight: string): number => {
   const value = parseInt(weight);
