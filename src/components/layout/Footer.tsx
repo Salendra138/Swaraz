@@ -25,18 +25,18 @@ const policies = [
 
 export const Footer = () => {
   return (
-    <footer className="footer-section">
-      <div className="swaraz-container py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+    <footer className="bg-foreground text-background">
+      <div className="swaraz-container px-4 py-8 sm:py-12 md:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8">
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-bold mb-4 text-foreground">Quick Links</h3>
+            <h3 className="text-sm sm:text-base font-bold mb-3 sm:mb-4 text-background">Quick Links</h3>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
-                <li key={link.path}>
+                <li key={link.path} className="min-h-[44px] flex items-center">
                   <Link
                     to={link.path}
-                    className="text-muted-foreground hover:text-primary transition-colors"
+                    className="text-xs sm:text-sm text-background/80 hover:text-background transition-colors font-medium"
                   >
                     {link.name}
                   </Link>
@@ -47,13 +47,13 @@ export const Footer = () => {
 
           {/* Products */}
           <div>
-            <h3 className="text-lg font-bold mb-4 text-foreground">Products</h3>
+            <h3 className="text-sm sm:text-base font-bold mb-3 sm:mb-4 text-background">Products</h3>
             <ul className="space-y-2">
               {products.map((product) => (
-                <li key={product.path}>
+                <li key={product.path} className="min-h-[44px] flex items-center">
                   <Link
                     to={product.path}
-                    className="text-muted-foreground hover:text-primary transition-colors"
+                    className="text-xs sm:text-sm text-background/80 hover:text-background transition-colors font-medium"
                   >
                     {product.name}
                   </Link>
@@ -64,13 +64,13 @@ export const Footer = () => {
 
           {/* Policies */}
           <div>
-            <h3 className="text-lg font-bold mb-4 text-foreground">Policies</h3>
+            <h3 className="text-sm sm:text-base font-bold mb-3 sm:mb-4 text-background">Policies</h3>
             <ul className="space-y-2">
               {policies.map((policy) => (
-                <li key={policy.path}>
+                <li key={policy.path} className="min-h-[44px] flex items-center">
                   <Link
                     to={policy.path}
-                    className="text-muted-foreground hover:text-primary transition-colors"
+                    className="text-xs sm:text-sm text-background/80 hover:text-background transition-colors font-medium"
                   >
                     {policy.name}
                   </Link>
@@ -80,52 +80,44 @@ export const Footer = () => {
           </div>
 
           {/* Corporate Office */}
-          <div>
-            <h3 className="text-lg font-bold mb-4 text-foreground">Corporate Office</h3>
-            <ul className="space-y-3">
-              <li className="flex items-start gap-2 text-muted-foreground">
+          <div className="sm:col-span-2 md:col-span-2 lg:col-span-2">
+            <h3 className="text-sm sm:text-base font-bold mb-3 sm:mb-4 text-background">Corporate Office</h3>
+            <ul className="space-y-2 sm:space-y-3">
+              <li className="flex items-start gap-2 text-background/80 text-xs sm:text-sm min-h-[44px]">
                 <Building className="h-5 w-5 mt-0.5 flex-shrink-0" />
-                <span># Plot No.9 & 10 Alapati Enclave Road No. 1, Sai Nagar, Nagole Hyderabad Telengana 500068 India</span>
+                <span className="font-medium"># Plot No.9 & 10 Alapati Enclave Road No. 1, Sai Nagar, Nagole Hyderabad Telengana 500068 India</span>
               </li>
-              <li className="flex items-center gap-2 text-muted-foreground">
+              <li className="flex items-center gap-2 text-background/80 text-xs sm:text-sm min-h-[44px]">
                 <Phone className="h-5 w-5 flex-shrink-0" />
-                <span>+9140 24741036</span>
+                <a href="tel:+914024741036" className="hover:text-background transition-colors font-medium">+9140 24741036</a>
               </li>
-              <li className="flex items-center gap-2 text-muted-foreground">
+              <li className="flex items-center gap-2 text-background/80 text-xs sm:text-sm min-h-[44px]">
                 <Clock className="h-5 w-5 flex-shrink-0" />
-                <span>10 am to 6 pm from Monday to Saturday</span>
+                <span className="font-medium">10 am to 6 pm Mon-Sat</span>
               </li>
-              <li className="flex items-center gap-2 text-muted-foreground">
+              <li className="flex items-center gap-2 text-background/80 text-xs sm:text-sm min-h-[44px]">
                 <Mail className="h-5 w-5 flex-shrink-0" />
-                <span>info@swarazspices.com</span>
+                <a href="mailto:info@swarazspices.com" className="hover:text-background transition-colors font-medium break-all">info@swarazspices.com</a>
               </li>
             </ul>
-          </div>
-
-          {/* Store Address */}
-          <div>
-            <h3 className="text-lg font-bold mb-4 text-foreground">Store Address</h3>
-            <div className="flex items-start gap-2 text-muted-foreground">
-              <MapPin className="h-5 w-5 mt-0.5 flex-shrink-0" />
-              <span># 15-6-519, Begum Bazar, Hyderabad-500012</span>
-            </div>
           </div>
         </div>
 
         {/* Bottom Footer */}
-        <div className="border-t border-border mt-8 pt-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-muted-foreground">
+        <div className="border-t border-background/20 mt-6 sm:mt-8 md:mt-12 pt-6 sm:pt-8">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+            <p className="text-xs sm:text-sm text-background/80 font-medium">
               © 2026 SWARAZ MIRCH STORE . All Rights Reserved
             </p>
 
             {/* Social Links */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 sm:gap-4">
               <a
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:opacity-80 transition-opacity"
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition-colors min-h-[44px] min-w-[44px]"
+                aria-label="Facebook"
               >
                 <Facebook className="h-5 w-5" />
               </a>
@@ -133,7 +125,8 @@ export const Footer = () => {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500 text-white flex items-center justify-center hover:opacity-80 transition-opacity"
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500 text-white flex items-center justify-center hover:opacity-90 transition-opacity min-h-[44px] min-w-[44px]"
+                aria-label="Instagram"
               >
                 <Instagram className="h-5 w-5" />
               </a>
@@ -141,13 +134,14 @@ export const Footer = () => {
                 href="https://youtube.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center hover:opacity-80 transition-opacity"
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-red-600 text-white flex items-center justify-center hover:bg-red-700 transition-colors min-h-[44px] min-w-[44px]"
+                aria-label="YouTube"
               >
                 <Youtube className="h-5 w-5" />
               </a>
             </div>
 
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs sm:text-sm text-background/80 font-medium">
               Designed and Developed by Wingman Brandworks LLP
             </p>
           </div>
