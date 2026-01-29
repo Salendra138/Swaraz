@@ -1,20 +1,36 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
-import { useToast } from '@/hooks/use-toast';
 import { ShoppingCart, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import categoryGroundSpices from '@/assets/category-ground-spices.jpg';
 import categoryWholeSpices from '@/assets/category-whole-spices.jpg';
 import categoryBlended from '@/assets/category-blended.jpg';
 
+const weights = ['25g', '50g', '100g', '200g', '300g', '500g', '1kg'];
+
+// Convert weight string to grams
+const convertToGrams = (weight: string): number => {
+  const value = parseInt(weight);
+  if (weight.includes('kg')) {
+    return value * 1000;
+  }
+  return value;
+};
+
+// Weight multiplier mapping based on base weight
+const getWeightMultiplier = (baseWeight: string, selectedWeight: string): number => {
+  const baseValue = convertToGrams(baseWeight);
+  const selectedValue = convertToGrams(selectedWeight);
+  return selectedValue / baseValue;
+};
+
 export interface Product {
   id: string;
   name: string;
   image: string;
   price: number;
-  originalPrice?: number;
-  variants: { weight: string; price: number }[];
+  weight: string;
   inStock: boolean;
   category: string;
 }
@@ -25,10 +41,7 @@ const products: Product[] = [
     name: 'Swaraz Kashmiri Chilli Powder | Mild Heat & Rich Colour',
     image: categoryGroundSpices,
     price: 78,
-    variants: [
-      { weight: '100g', price: 78 },
-      { weight: '200g', price: 156 },
-    ],
+    weight: '100g',
     inStock: true,
     category: 'Pure Grounded Spices',
   },
@@ -37,7 +50,7 @@ const products: Product[] = [
     name: 'Swaraz Fenugreek Powder',
     image: categoryBlended,
     price: 17,
-    variants: [{ weight: '100g', price: 17 }],
+    weight: '100g',
     inStock: true,
     category: 'Pure Grounded Spices',
   },
@@ -46,7 +59,7 @@ const products: Product[] = [
     name: 'Swaraz Kasuri Methi | Sun-Dried & Flavour-Rich Leaves',
     image: categoryWholeSpices,
     price: 27,
-    variants: [{ weight: '25g', price: 27 }],
+    weight: '25g',
     inStock: true,
     category: 'Whole Spices',
   },
@@ -55,10 +68,7 @@ const products: Product[] = [
     name: 'Swaraz Fenugreek (Methi Seeds)',
     image: categoryWholeSpices,
     price: 9,
-    variants: [
-      { weight: '100g', price: 19 },
-      { weight: '50g', price: 9 },
-    ],
+    weight: '50g',
     inStock: true,
     category: 'Whole Spices',
   },
@@ -67,7 +77,7 @@ const products: Product[] = [
     name: 'Three Mango Black Pepper Powder',
     image: categoryGroundSpices,
     price: 125,
-    variants: [{ weight: '100g', price: 125 }],
+    weight: '100g',
     inStock: true,
     category: 'Pure Grounded Spices',
   },
@@ -76,10 +86,7 @@ const products: Product[] = [
     name: 'Swaraz Green Cardamom (Elachi)',
     image: categoryWholeSpices,
     price: 160,
-    variants: [
-      { weight: '50g', price: 300 },
-      { weight: '25g', price: 160 },
-    ],
+    weight: '25g',
     inStock: true,
     category: 'Whole Spices',
   },
@@ -88,12 +95,7 @@ const products: Product[] = [
     name: 'Swaraz Turmeric Powder – High-Curcumin | Aromatic Haldi',
     image: categoryGroundSpices,
     price: 24,
-    variants: [
-      { weight: '500g', price: 215 },
-      { weight: '200g', price: 84 },
-      { weight: '100g', price: 43 },
-      { weight: '50g', price: 24 },
-    ],
+    weight: '50g',
     inStock: true,
     category: 'Pure Grounded Spices',
   },
@@ -102,7 +104,7 @@ const products: Product[] = [
     name: 'Three Mango Rasam Powder',
     image: categoryBlended,
     price: 60,
-    variants: [{ weight: '100g', price: 60 }],
+    weight: '100g',
     inStock: true,
     category: 'Blended Spices',
   },
@@ -114,23 +116,20 @@ interface ProductCardProps {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const { addToCart } = useCart();
-  const { toast } = useToast();
   const navigate = useNavigate();
-  const [selectedVariant, setSelectedVariant] = useState(product.variants[0]);
+  const [selectedWeight, setSelectedWeight] = useState(product.weight);
+
+  const multiplier = getWeightMultiplier(product.weight, selectedWeight);
+  const displayPrice = product.price * multiplier;
 
   const handleAddToCart = () => {
     addToCart({
       id: product.id,
       name: product.name,
-      price: selectedVariant.price,
+      price: displayPrice,
       image: product.image,
       quantity: 1,
-      weight: selectedVariant.weight,
-    });
-
-    toast({
-      title: "Added to cart",
-      description: `${product.name} - ${selectedVariant.weight} has been added to your cart.`,
+      weight: selectedWeight,
     });
   };
 
@@ -168,24 +167,26 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </h3>
 
         <div className="mt-2">
-          <p className="price-text">Rs. {selectedVariant.price.toFixed(2)}</p>
+          <p className="price-text">Rs. {displayPrice.toFixed(2)}</p>
         </div>
 
-        <div className="mt-3 flex items-center gap-2">
-          <select
-            className="flex-1 text-sm border border-border rounded px-2 py-1.5"
-            value={selectedVariant.weight}
-            onChange={(e) => {
-              const variant = product.variants.find(v => v.weight === e.target.value);
-              if (variant) setSelectedVariant(variant);
-            }}
-          >
-            {product.variants.map((variant) => (
-              <option key={variant.weight} value={variant.weight}>
-                {variant.weight} - Rs. {variant.price.toFixed(2)}
-              </option>
+        {/* Weight Selection */}
+        <div className="mt-3 mb-3">
+          <div className="flex flex-wrap gap-1">
+            {weights.map((weight) => (
+              <button
+                key={weight}
+                onClick={() => setSelectedWeight(weight)}
+                className={`px-2 py-1 text-xs border rounded transition-colors ${
+                  selectedWeight === weight
+                    ? 'bg-primary text-primary-foreground border-primary'
+                    : 'border-border hover:border-primary'
+                }`}
+              >
+                {weight}
+              </button>
             ))}
-          </select>
+          </div>
         </div>
 
         <Button

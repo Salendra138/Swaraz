@@ -22,7 +22,7 @@ const About = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div className="prose prose-lg max-w-none">
               <p className="text-muted-foreground leading-relaxed">
-                The name Swaraz Spices has been synonymous with purity and high quality. The invention of this invaluable household spice can be traced back to 1958, when two brands, Swaraz and Three Mango were introduced together. Sri Damji Jeevaraj Shah laid down the roots of the brand in the year 1958 at Begum Bazar, Hyderabad in the name 'Swaraz Mirch Store' as quality ground spices manufacturers. As a brand, their mission is to provide unique culinary experiences and healthy living solutions for consumers. Their unwavering determination is to improve the quality of life for consumers, customers, and workers by being inventive and consumer-centric.
+                The name Swaraz Spices has been synonymous with purity and high quality. The invention of this invaluable household spice can be traced back to 1985, when Swaraz were introduced by Sri Thalluri Chakraiah laid down the roots of the brand in the year 1985 at Khammam, in the name 'Swaraz Mirch Store' as quality ground spices manufacturers. As a brand, their mission is to provide unique culinary experiences and healthy living solutions for consumers. Their unwavering determination is to improve the quality of life for consumers, customers, and workers by being inventive and consumer-centric.
               </p>
 
               <p className="text-muted-foreground leading-relaxed mt-6">
@@ -34,15 +34,11 @@ const About = () => {
               </p>
 
               <p className="text-muted-foreground leading-relaxed mt-6">
-                With a stronghold in the Southern part of the country and strong exports, Swaraz Spices has the most modern manufacturing facilities and has the capability and authenticity to become market leaders PAN India and eventually across the world.
+                With a stronghold in the Southern part of the country and strong exports, Swaraz Spices has the most modern manufacturing facilities and has the capability and authenticity to become market leaders PAN India
               </p>
 
               <p className="text-muted-foreground leading-relaxed mt-6">
-                At present, Swaraz Spices is an indispensable ingredient in every Indian household. It is reminiscent of the pure, unfiltered spice powder which we all have grown up relishing in our parents and grandparents home. The "Three Mango Chilli Powder" is a darling of Telugu people.
-              </p>
-
-              <p className="text-muted-foreground leading-relaxed mt-6">
-                Crafted with only the finest of ingredients, our masala are bound to tickle your taste-buds and offer a class-apart culinary experience. Bring home Swaraz Spices today- The soul of the Indian kitchen.
+                At present, Swaraz Spices is an indispensable ingredient in every Indian household. It is reminiscent of the pure, unfiltered spice powder which we all have grown up relishing in our parents and grandparents home. Crafted with only the finest of ingredients, our masala are bound to tickle your taste-buds and offer a class-apart culinary experience. Bring home Swaraz Spices today- The soul of the Indian kitchen.
               </p>
             </div>
 

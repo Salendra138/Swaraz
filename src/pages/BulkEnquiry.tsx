@@ -73,7 +73,6 @@ const BulkEnquiry = () => {
                     <SelectItem value="pure-grounded">Pure Grounded Spices</SelectItem>
                     <SelectItem value="blended">Blended Spices</SelectItem>
                     <SelectItem value="whole">Whole Spices</SelectItem>
-                    <SelectItem value="pickles">Pickles</SelectItem>
                     <SelectItem value="hing">Hing & Asafoetida</SelectItem>
                     <SelectItem value="pastes">Condiment & Cooking Pastes</SelectItem>
                   </SelectContent>

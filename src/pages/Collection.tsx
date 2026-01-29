@@ -1,15 +1,34 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
-import { useToast } from '@/hooks/use-toast';
 import { Layout } from '@/components/layout/Layout';
 import { ShoppingCart, Eye } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useState } from 'react';
 import categoryGroundSpices from '@/assets/category-ground-spices.jpg';
 import categoryWholeSpices from '@/assets/category-whole-spices.jpg';
 import categoryBlended from '@/assets/category-blended.jpg';
-import categoryPickles from '@/assets/category-pickles.jpg';
 import categoryHing from '@/assets/category-hing.jpg';
 import categoryPastes from '@/assets/category-pastes.jpg';
+
+const weights = ['25g', '50g', '100g', '200g', '300g', '500g', '1kg'];
+
+const weights = ['25g', '50g', '100g', '200g', '300g', '500g', '1kg'];
+
+// Convert weight string to grams
+const convertToGrams = (weight: string): number => {
+  const value = parseInt(weight);
+  if (weight.includes('kg')) {
+    return value * 1000;
+  }
+  return value;
+};
+
+// Weight multiplier mapping based on base weight
+const getWeightMultiplier = (baseWeight: string, selectedWeight: string): number => {
+  const baseValue = convertToGrams(baseWeight);
+  const selectedValue = convertToGrams(selectedWeight);
+  return selectedValue / baseValue;
+};
 
 const collectionsData: Record<string, { name: string; image: string; products: any[] }> = {
   'pure-grounded-spices': {
@@ -22,16 +41,6 @@ const collectionsData: Record<string, { name: string; image: string; products: a
       { id: '4', name: 'Swaraz Coriander Powder', price: 35, image: categoryGroundSpices, weight: '100g' },
       { id: '5', name: 'Swaraz Kashmiri Chilli', price: 78, image: categoryGroundSpices, weight: '100g' },
       { id: '6', name: 'Swaraz Fenugreek Powder', price: 17, image: categoryGroundSpices, weight: '100g' },
-    ],
-  },
-  'pickles': {
-    name: 'Pickles',
-    image: categoryPickles,
-    products: [
-      { id: '1', name: 'Swaraz Mango Pickle', price: 120, image: categoryPickles, weight: '300g' },
-      { id: '2', name: 'Swaraz Lemon Pickle', price: 95, image: categoryPickles, weight: '300g' },
-      { id: '3', name: 'Swaraz Mixed Vegetable Pickle', price: 110, image: categoryPickles, weight: '300g' },
-      { id: '4', name: 'Swaraz Garlic Pickle', price: 85, image: categoryPickles, weight: '250g' },
     ],
   },
   'blended-spices': {
@@ -82,9 +91,9 @@ const collectionsData: Record<string, { name: string; image: string; products: a
 const Collection = () => {
   const { slug } = useParams();
   const { addToCart } = useCart();
-  const { toast } = useToast();
   const navigate = useNavigate();
   const collection = collectionsData[slug || ''];
+  const [selectedWeights, setSelectedWeights] = useState<Record<string, string>>({})
 
   if (!collection) {
     return (
@@ -117,49 +126,71 @@ const Collection = () => {
           <h1 className="text-2xl md:text-3xl font-bold mb-8">{collection.name}</h1>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-            {collection.products.map((product) => (
-              <div key={product.id} className="product-card group">
-                <div className="relative aspect-square overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="product-image w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
-                    <Link
-                      to={`/products/${product.id}`}
-                      className="w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+            {collection.products.map((product) => {
+              const selectedWeight = selectedWeights[product.id] || product.weight;
+              const multiplier = getWeightMultiplier(product.weight, selectedWeight);
+              const displayPrice = product.price * multiplier;
+
+              return (
+                <div key={product.id} className="product-card group">
+                  <div className="relative aspect-square overflow-hidden">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="product-image w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
+                      <Link
+                        to={`/products/${product.id}`}
+                        className="w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                      >
+                        <Eye className="h-5 w-5" />
+                      </Link>
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <span className="badge-stock text-xs">In stock!</span>
+                    <h3 className="font-medium text-sm mt-1 line-clamp-2 min-h-[40px]">
+                      <Link to={`/products/${product.id}`} className="hover:text-primary">
+                        {product.name}
+                      </Link>
+                    </h3>
+                    <p className="text-sm text-muted-foreground">{selectedWeight}</p>
+                    <p className="price-text mt-2">Rs. {displayPrice.toFixed(2)}</p>
+
+                    {/* Weight Selection */}
+                    <div className="mt-3 mb-3">
+                      <div className="flex flex-wrap gap-1">
+                        {weights.map((weight) => (
+                          <button
+                            key={weight}
+                            onClick={() => setSelectedWeights(prev => ({ ...prev, [product.id]: weight }))}
+                            className={`px-2 py-1 text-xs border rounded transition-colors ${
+                              selectedWeight === weight
+                                ? 'bg-primary text-primary-foreground border-primary'
+                                : 'border-border hover:border-primary'
+                            }`}
+                          >
+                            {weight}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <Button
+                      className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                      size="sm"
+                      onClick={() => {
+                        addToCart({ ...product, quantity: 1, weight: selectedWeight, price: displayPrice });
+                      }}
                     >
-                      <Eye className="h-5 w-5" />
-                    </Link>
+                      <ShoppingCart className="h-4 w-4 mr-2" />
+                      Add to Cart
+                    </Button>
                   </div>
                 </div>
-                <div className="p-4">
-                  <span className="badge-stock text-xs">In stock!</span>
-                  <h3 className="font-medium text-sm mt-1 line-clamp-2 min-h-[40px]">
-                    <Link to={`/products/${product.id}`} className="hover:text-primary">
-                      {product.name}
-                    </Link>
-                  </h3>
-                  <p className="text-sm text-muted-foreground">{product.weight}</p>
-                  <p className="price-text mt-2">Rs. {product.price.toFixed(2)}</p>
-                  <Button
-                    className="w-full mt-3 bg-primary text-primary-foreground hover:bg-primary/90"
-                    size="sm"
-                    onClick={() => {
-                      addToCart({ ...product, quantity: 1 });
-                      toast({
-                        title: "Added to Cart",
-                        description: `${product.name} has been added to your cart.`,
-                      });
-                    }}
-                  >
-                    <ShoppingCart className="h-4 w-4 mr-2" />
-                    Add to Cart
-                  </Button>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

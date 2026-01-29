@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import categoryWholeSpices from '@/assets/category-whole-spices.jpg';
-import categoryPickles from '@/assets/category-pickles.jpg';
 import categoryHing from '@/assets/category-hing.jpg';
 import categoryGroundSpices from '@/assets/category-ground-spices.jpg';
 import categoryPastes from '@/assets/category-pastes.jpg';
@@ -11,11 +10,6 @@ const categories = [
     name: 'Whole Spices',
     image: categoryWholeSpices,
     path: '/collections/whole-spices',
-  },
-  {
-    name: 'Pickles',
-    image: categoryPickles,
-    path: '/collections/pickles',
   },
   {
     name: 'Hing/Asafoetida',

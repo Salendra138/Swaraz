@@ -3,7 +3,6 @@ import { products } from '@/data/products';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/context/CartContext';
-import { useToast } from '@/components/ui/use-toast';
 import { Minus, Plus, ShoppingCart } from 'lucide-react';
 import { useState } from 'react';
 
@@ -12,7 +11,6 @@ const ProductDetails = () => {
     const navigate = useNavigate();
     const product = products.find((p) => p.id === id);
     const { addToCart } = useCart();
-    const { toast } = useToast();
     const [quantity, setQuantity] = useState(1);
 
     if (!product) {
@@ -30,11 +28,6 @@ const ProductDetails = () => {
 
     const handleAddToCart = () => {
         addToCart({ ...product, quantity });
-        toast({
-            title: "Added to Cart",
-            description: `${product.name} (x${quantity}) has been added to your cart.`,
-            className: "bg-green-50 border-green-200 text-green-900",
-        });
     };
 
     const handleBuyNow = () => {

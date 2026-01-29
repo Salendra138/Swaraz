@@ -13,7 +13,6 @@ import { Button } from '@/components/ui/button';
 
 const categories = [
   { name: 'Pure Grounded Spices', path: '/collections/pure-grounded-spices' },
-  { name: 'Pickles', path: '/collections/pickles' },
   { name: 'Blended Spices', path: '/collections/blended-spices' },
   { name: 'Condiment & Cooking Pastes', path: '/collections/condiment-cooking-pastes' },
   { name: 'Hing & Asafoetida', path: '/collections/hing-asafoetida' },
@@ -24,16 +23,7 @@ const navLinks = [
   { name: 'Home', path: '/' },
   { name: 'Shop', path: '/shop' },
   { name: 'Bulk Enquiry', path: '/bulk-enquiry' },
-  {
-    name: 'About Us',
-    path: '/about',
-    children: [
-      { name: 'Overview', path: '/about' },
-      { name: 'TV Commercials', path: '/pages/tv-commercials' },
-      { name: 'Recipe Videos', path: '/pages/recipe-videos' },
-    ]
-  },
-  
+  { name: 'About Us', path: '/about' },
   { name: 'Contact Us', path: '/contact' },
   { name: 'Careers', path: '/careers' },
 ];
@@ -94,17 +84,18 @@ export const Header = () => {
                 {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
 
-              <div className="hidden sm:flex items-center gap-4">
-
-                <Link to="/cart" className="flex items-center gap-2 cursor-pointer">
-                  <div className="relative">
-                    <ShoppingCart className="h-6 w-6" />
+              <Link to="/cart" className="flex items-center gap-2 cursor-pointer">
+                <div className="relative">
+                  <ShoppingCart className="h-6 w-6" />
+                  {getItemCount() > 0 && (
                     <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center">
                       {getItemCount()}
                     </span>
-                  </div>
-                </Link>
+                  )}
+                </div>
+              </Link>
 
+              <div className="hidden sm:flex items-center gap-4">
                 {/* wishlist removed */}
               </div>
             </div>
@@ -139,37 +130,16 @@ export const Header = () => {
             {/* Nav Links - Desktop */}
             <nav className="hidden lg:flex items-center gap-6">
               {navLinks.map((link) => (
-                link.children ? (
-                  <DropdownMenu key={link.name}>
-                    <DropdownMenuTrigger className={`flex items-center gap-1 font-medium transition-colors hover:text-primary focus:outline-none ${location.pathname.startsWith(link.path) ? 'text-primary' : 'text-foreground'
-                      }`}>
-                      {link.name} <ChevronDown className="h-4 w-4" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      {link.children.map((child) => (
-                        <DropdownMenuItem key={child.name} asChild>
-                          <Link
-                            to={child.path}
-                            className={`w-full cursor-pointer ${location.pathname === child.path ? 'text-primary' : ''}`}
-                          >
-                            {child.name}
-                          </Link>
-                        </DropdownMenuItem>
-                      ))}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                ) : (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    className={`font-medium transition-colors ${location.pathname === link.path
-                      ? 'text-primary'
-                      : 'text-foreground hover:text-primary'
-                      }`}
-                  >
-                    {link.name}
-                  </Link>
-                )
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={`font-medium transition-colors ${location.pathname === link.path
+                    ? 'text-primary'
+                    : 'text-foreground hover:text-primary'
+                    }`}
+                >
+                  {link.name}
+                </Link>
               ))}
               <Link to="/combo-box" className="text-primary font-semibold">
                 Combo Box
@@ -178,7 +148,7 @@ export const Header = () => {
 
             {/* Free Shipping Notice */}
             <div className="hidden md:block text-sm text-muted-foreground">
-              Free shipping on orders above ₹499/- across India
+              Free shipping on orders above ₹499/ across India
             </div>
           </div>
         </div>

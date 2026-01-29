@@ -10,7 +10,6 @@ const quickLinks = [
 
 const products = [
   { name: 'Pure Grounded Spices', path: '/collections/pure-grounded-spices' },
-  { name: 'Pickles', path: '/collections/pickles' },
   { name: 'Blended Spices', path: '/collections/blended-spices' },
   { name: 'Condiment & Cooking Pastes', path: '/collections/condiment-cooking-pastes' },
   { name: 'Hing & Asafoetida', path: '/collections/hing-asafoetida' },
@@ -86,7 +85,7 @@ export const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start gap-2 text-muted-foreground">
                 <Building className="h-5 w-5 mt-0.5 flex-shrink-0" />
-                <span>#8-2-686/6/D/9 & 9/1, 3rd Floor, Roxana Fortune Road No.12, Banjara Hills, Hyderabad 500034</span>
+                <span># Plot No.9 & 10 Alapati Enclave Road No. 1, Sai Nagar, Nagole Hyderabad Telengana 500068 India</span>
               </li>
               <li className="flex items-center gap-2 text-muted-foreground">
                 <Phone className="h-5 w-5 flex-shrink-0" />

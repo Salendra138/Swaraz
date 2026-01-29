@@ -70,12 +70,12 @@ const Contact = () => {
                 <div className="bg-muted rounded-lg p-6">
                   <h3 className="font-bold text-lg mb-4">Corporate Office</h3>
                   <ul className="space-y-4">
-                    <li className="flex items-start gap-3">
+                    {/* <li className="flex items-start gap-3">
                       <Building className="h-5 w-5 mt-1 text-primary flex-shrink-0" />
                       <span className="text-muted-foreground">
-                        #8-2-686/6/D/9 & 9/1, 3rd Floor, Roxana Fortune Road No.12, Banjara Hills, Hyderabad 500034
+                        # Plot No.9 & 10 Alapati Enclave Road No. 1, Sai Nagar, Nagole Hyderabad Telengana 500068 India
                       </span>
-                    </li>
+                    </li> */}
                     <li className="flex items-center gap-3">
                       <Phone className="h-5 w-5 text-primary flex-shrink-0" />
                       <a href="tel:+914024741036" className="text-muted-foreground hover:text-primary">
@@ -97,7 +97,7 @@ const Contact = () => {
                   </ul>
                 </div>
 
-                <div className="bg-muted rounded-lg p-6">
+                {/* <div className="bg-muted rounded-lg p-6">
                   <h3 className="font-bold text-lg mb-4">Store Address</h3>
                   <div className="flex items-start gap-3">
                     <MapPin className="h-5 w-5 mt-1 text-primary flex-shrink-0" />
@@ -105,7 +105,7 @@ const Contact = () => {
                       # 15-6-519, Begum Bazar, Hyderabad-500012
                     </span>
                   </div>
-                </div>
+                </div> */}
               </div>
 
 

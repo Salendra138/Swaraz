@@ -16,13 +16,15 @@ interface CartContextType {
     updateQuantity: (id: string, quantity: number) => void;
     getCartTotal: () => number;
     getItemCount: () => number;
-
+    lastAddedItem: CartItem | null;
+    dismissNotification: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [items, setItems] = useState<CartItem[]>([]);
+    const [lastAddedItem, setLastAddedItem] = useState<CartItem | null>(null);
     const isInitialized = React.useRef(false);
 
     // Load cart from local storage on mount
@@ -46,14 +48,24 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             const existingItem = prevItems.find((item) => item.id === product.id);
             const quantityToAdd = product.quantity || 1;
 
+            let updatedItems;
             if (existingItem) {
-                return prevItems.map((item) =>
+                updatedItems = prevItems.map((item) =>
                     item.id === product.id
                         ? { ...item, quantity: item.quantity + quantityToAdd }
                         : item
                 );
+            } else {
+                updatedItems = [...prevItems, { ...product, quantity: quantityToAdd }];
             }
-            return [...prevItems, { ...product, quantity: quantityToAdd }];
+
+            // Set the last added item with updated quantity
+            const finalItem = updatedItems.find(item => item.id === product.id);
+            if (finalItem) {
+                setLastAddedItem(finalItem);
+            }
+
+            return updatedItems;
         });
     };
 
@@ -78,6 +90,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return items.reduce((total, item) => total + item.quantity, 0);
     };
 
+    const dismissNotification = () => {
+        setLastAddedItem(null);
+    };
+
     return (
         <CartContext.Provider
             value={{
@@ -87,6 +103,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 updateQuantity,
                 getCartTotal,
                 getItemCount,
+                lastAddedItem,
+                dismissNotification,
             }}
         >
             {children}

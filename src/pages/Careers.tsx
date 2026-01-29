@@ -85,9 +85,9 @@ const Careers = () => {
       {/* Content */}
       <section className="swaraz-section">
         <div className="swaraz-container">
-          <p className="text-center text-muted-foreground mb-4">
+          {/* <p className="text-center text-muted-foreground mb-4">
             Get new updates and stay connected.
-          </p>
+          </p> */}
           <h1 className="text-3xl md:text-4xl font-bold text-center text-primary mb-4">
             Careers
           </h1>
@@ -97,7 +97,7 @@ const Careers = () => {
           </p>
 
           {/* Job Listings */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {jobOpenings.map((job, index) => (
               <div
                 key={index}
@@ -108,7 +108,7 @@ const Careers = () => {
                 <p className="text-muted-foreground text-sm mt-2">{job.experience}</p>
               </div>
             ))}
-          </div>
+          </div> */}
 
           {/* Application Form */}
           <div className="max-w-2xl mx-auto mt-16 bg-card border border-border rounded-lg p-8 shadow-sm">

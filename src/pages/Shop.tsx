@@ -5,7 +5,6 @@ import { ShoppingCart, Eye, Grid, List } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useCart } from '@/context/CartContext';
-import { useToast } from '@/components/ui/use-toast';
 import { useNavigate } from 'react-router-dom';
 import {
   Select,
@@ -18,14 +17,12 @@ import { products as allProducts } from '@/data/products';
 import categoryGroundSpices from '@/assets/category-ground-spices.jpg';
 import categoryWholeSpices from '@/assets/category-whole-spices.jpg';
 import categoryBlended from '@/assets/category-blended.jpg';
-import categoryPickles from '@/assets/category-pickles.jpg';
 import categoryHing from '@/assets/category-hing.jpg';
 import categoryPastes from '@/assets/category-pastes.jpg';
 
 
 const categories = [
   'Pure Grounded Spices',
-  'Pickles',
   'Blended Spices',
   'Condiment & Cooking Pastes',
   'Hing & Asafoetida',
@@ -34,16 +31,31 @@ const categories = [
 
 const weights = ['25g', '50g', '100g', '200g', '300g', '500g', '1kg'];
 
+// Convert weight string to grams
+const convertToGrams = (weight: string): number => {
+  const value = parseInt(weight);
+  if (weight.includes('kg')) {
+    return value * 1000;
+  }
+  return value;
+};
+
+// Weight multiplier mapping based on base weight
+const getWeightMultiplier = (baseWeight: string, selectedWeight: string): number => {
+  const baseValue = convertToGrams(baseWeight);
+  const selectedValue = convertToGrams(selectedWeight);
+  return selectedValue / baseValue;
+};
+
 const Shop = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedWeights, setSelectedWeights] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState('featured');
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('search')?.toLowerCase() || '';
   const { addToCart } = useCart();
-  const { toast } = useToast();
   const navigate = useNavigate();
+  const [selectedWeights, setSelectedWeights] = useState<Record<string, string>>({});
 
   const filteredProducts = allProducts.filter((product) => {
     // Search Filter
@@ -52,9 +64,6 @@ const Shop = () => {
     }
 
     if (selectedCategories.length > 0 && !selectedCategories.includes(product.category)) {
-      return false;
-    }
-    if (selectedWeights.length > 0 && !selectedWeights.includes(product.weight)) {
       return false;
     }
     return true;
@@ -80,14 +89,6 @@ const Shop = () => {
       prev.includes(category)
         ? prev.filter((c) => c !== category)
         : [...prev, category]
-    );
-  };
-
-  const toggleWeight = (weight: string) => {
-    setSelectedWeights((prev) =>
-      prev.includes(weight)
-        ? prev.filter((w) => w !== weight)
-        : [...prev, weight]
     );
   };
 
@@ -131,30 +132,8 @@ const Shop = () => {
                 </div>
               </div>
 
-              {/* Weight Filter */}
-              <div className="mb-8">
-                <h3 className="text-lg font-bold mb-4">Weight</h3>
-                <div className="space-y-3">
-                  {weights.map((weight) => (
-                    <div key={weight} className="flex items-center gap-2">
-                      <Checkbox
-                        id={weight}
-                        checked={selectedWeights.includes(weight)}
-                        onCheckedChange={() => toggleWeight(weight)}
-                      />
-                      <label
-                        htmlFor={weight}
-                        className="text-sm cursor-pointer hover:text-primary"
-                      >
-                        {weight}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
               {/* Availability Filter */}
-              <div>
+              {/* <div>
                 <h3 className="text-lg font-bold mb-4">Availability</h3>
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
@@ -170,7 +149,7 @@ const Shop = () => {
                     </label>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </aside>
 
             {/* Products Grid */}
@@ -202,50 +181,71 @@ const Shop = () => {
 
               {/* Products */}
               <div className={`grid gap-4 ${viewMode === 'grid' ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4' : 'grid-cols-1'}`}>
-                {sortedProducts.map((product) => (
-                  <div key={product.id} className="product-card group">
-                    <div className="relative aspect-square overflow-hidden">
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="product-image w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
-                        <Link
-                          to={`/products/${product.id}`}
-                          className="w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                {sortedProducts.map((product) => {
+                  const selectedWeight = selectedWeights[product.id] || product.weight;
+                  const multiplier = getWeightMultiplier(product.weight, selectedWeight);
+                  const displayPrice = product.price * multiplier;
+
+                  return (
+                    <div key={product.id} className="product-card group">
+                      <div className="relative aspect-square overflow-hidden">
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="product-image w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
+                          <Link
+                            to={`/products/${product.id}`}
+                            className="w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                          >
+                            <Eye className="h-5 w-5" />
+                          </Link>
+                        </div>
+                      </div>
+                      <div className="p-4">
+                        <span className="badge-stock text-xs">In stock!</span>
+                        <h3 className="font-medium text-sm mt-1 line-clamp-2 min-h-[40px]">
+                          <Link to={`/products/${product.id}`} className="hover:text-primary">
+                            {product.name}
+                          </Link>
+                        </h3>
+                        <p className="text-sm text-muted-foreground">{selectedWeight}</p>
+                        <p className="price-text mt-2">Rs. {displayPrice.toFixed(2)}</p>
+                        
+                        {/* Weight Selection */}
+                        <div className="mt-3 mb-3">
+                          <div className="flex flex-wrap gap-1">
+                            {weights.map((weight) => (
+                              <button
+                                key={weight}
+                                onClick={() => setSelectedWeights(prev => ({ ...prev, [product.id]: weight }))}
+                                className={`px-2 py-1 text-xs border rounded transition-colors ${
+                                  selectedWeight === weight
+                                    ? 'bg-primary text-primary-foreground border-primary'
+                                    : 'border-border hover:border-primary'
+                                }`}
+                              >
+                                {weight}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+
+                        <Button
+                          className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                          size="sm"
+                          onClick={() => {
+                            addToCart({ ...product, weight: selectedWeight, price: displayPrice });
+                          }}
                         >
-                          <Eye className="h-5 w-5" />
-                        </Link>
+                          <ShoppingCart className="h-4 w-4 mr-2" />
+                          Add to Cart
+                        </Button>
                       </div>
                     </div>
-                    <div className="p-4">
-                      <span className="badge-stock text-xs">In stock!</span>
-                      <h3 className="font-medium text-sm mt-1 line-clamp-2 min-h-[40px]">
-                        <Link to={`/products/${product.id}`} className="hover:text-primary">
-                          {product.name}
-                        </Link>
-                      </h3>
-                      <p className="text-sm text-muted-foreground">{product.weight}</p>
-                      <p className="price-text mt-2">Rs. {product.price.toFixed(2)}</p>
-                      <Button
-                        className="w-full mt-3 bg-primary text-primary-foreground hover:bg-primary/90"
-                        size="sm"
-                        onClick={() => {
-                          addToCart(product);
-                          toast({
-                            title: "Added to Cart",
-                            description: `${product.name} has been added to your cart.`,
-                            className: "bg-green-50 border-green-200 text-green-900",
-                          });
-                        }}
-                      >
-                        <ShoppingCart className="h-4 w-4 mr-2" />
-                        Add to Cart
-                      </Button>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
