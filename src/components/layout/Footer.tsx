@@ -142,8 +142,17 @@ export const Footer = () => {
             </div>
 
             <p className="text-xs sm:text-sm text-background/80 font-medium">
-              Designed and Developed by Wingman Brandworks LLP
-            </p>
+  Designed and Developed by{" "}
+  <a
+    href="https://staffarc.in"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="underline hover:text-background transition-colors"
+  >
+    Staffarc
+  </a>
+</p>
+
           </div>
         </div>
       </div>
