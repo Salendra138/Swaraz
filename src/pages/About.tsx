@@ -66,7 +66,7 @@ const About = () => {
               <p className="text-muted-foreground uppercase tracking-wider">Happy Customers</p>
             </div>
             <div>
-              <h3 className="text-4xl md:text-5xl font-bold text-foreground mb-2">120+</h3>
+              <h3 className="text-4xl md:text-5xl font-bold text-foreground mb-2">20+</h3>
               <p className="text-muted-foreground uppercase tracking-wider">Products</p>
             </div>
             <div>

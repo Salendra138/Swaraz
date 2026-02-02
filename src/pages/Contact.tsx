@@ -73,7 +73,7 @@ const Contact = () => {
                     <li className="flex items-center gap-3 min-h-[44px]">
                       <Phone className="h-5 w-5 text-primary flex-shrink-0" />
                       <a href="tel:+914024741036" className="text-muted-foreground hover:text-primary text-sm sm:text-base transition-colors">
-                        +9140 24741036
+                        +91 9100478999
                       </a>
                     </li>
                     <li className="flex items-start gap-3 min-h-[44px]">
