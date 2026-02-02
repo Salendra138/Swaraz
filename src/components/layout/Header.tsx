@@ -14,17 +14,17 @@ import { Button } from '@/components/ui/button';
 const categories = [
   { name: 'Pure Grounded Spices', path: '/collections/pure-grounded-spices' },
   { name: 'Blended Spices', path: '/collections/blended-spices' },
-  { name: 'Condiment & Cooking Pastes', path: '/collections/condiment-cooking-pastes' },
   { name: 'Hing & Asafoetida', path: '/collections/hing-asafoetida' },
   { name: 'Whole Spices', path: '/collections/whole-spices' },
 ];
 
 const navLinks = [
   { name: 'Home', path: '/' },
-  { name: 'Shop', path: '/shop' },
-  { name: 'Bulk Enquiry', path: '/bulk-enquiry' },
   { name: 'About Us', path: '/about' },
+  { name: 'Shop', path: '/shop' },
+  { name: 'Combo Box', path: '/combo-box' },
   { name: 'Contact Us', path: '/contact' },
+  { name: 'Bulk Enquiry', path: '/bulk-enquiry' },
   { name: 'Careers', path: '/careers' },
 ];
 
@@ -147,9 +147,6 @@ export const Header = () => {
                   {link.name}
                 </Link>
               ))}
-              <Link to="/combo-box" className="text-primary font-semibold text-sm">
-                Combo Box
-              </Link>
             </nav>
 
             {/* Free Shipping Notice */}
@@ -188,13 +185,6 @@ export const Header = () => {
                   {link.name}
                 </Link>
               ))}
-              <Link
-                to="/combo-box"
-                className="text-primary font-semibold py-2 px-2 text-sm rounded-lg hover:bg-primary/10 transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Combo Box
-              </Link>
             </nav>
             {/* Categories for mobile */}
             <div className="border-t border-border pt-4">

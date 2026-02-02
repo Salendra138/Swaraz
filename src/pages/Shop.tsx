@@ -18,7 +18,6 @@ import { products as allProducts } from '@/data/products';
 const categories = [
   'Pure Grounded Spices',
   'Blended Spices',
-  'Condiment & Cooking Pastes',
   'Hing & Asafoetida',
   'Whole Spices',
 ];

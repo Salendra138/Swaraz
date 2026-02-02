@@ -11,7 +11,6 @@ const quickLinks = [
 const products = [
   { name: 'Pure Grounded Spices', path: '/collections/pure-grounded-spices' },
   { name: 'Blended Spices', path: '/collections/blended-spices' },
-  { name: 'Condiment & Cooking Pastes', path: '/collections/condiment-cooking-pastes' },
   { name: 'Hing & Asafoetida', path: '/collections/hing-asafoetida' },
   { name: 'Whole Spices', path: '/collections/whole-spices' },
 ];
@@ -89,7 +88,7 @@ export const Footer = () => {
               </li>
               <li className="flex items-center gap-2 text-background/80 text-xs sm:text-sm min-h-[44px]">
                 <Phone className="h-5 w-5 flex-shrink-0" />
-                <a href="tel:+914024741036" className="hover:text-background transition-colors font-medium">+9140 24741036</a>
+                <a href="tel:+914024741036" className="hover:text-background transition-colors font-medium">+91 9100478999</a>
               </li>
               <li className="flex items-center gap-2 text-background/80 text-xs sm:text-sm min-h-[44px]">
                 <Clock className="h-5 w-5 flex-shrink-0" />
@@ -107,7 +106,7 @@ export const Footer = () => {
         <div className="border-t border-background/20 mt-6 sm:mt-8 md:mt-12 pt-6 sm:pt-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
             <p className="text-xs sm:text-sm text-background/80 font-medium">
-              © 2026 SWARAZ MIRCH STORE . All Rights Reserved
+              © 2026 SWARAZ SPICES. All Rights Reserved
             </p>
 
             {/* Social Links */}
@@ -152,7 +151,6 @@ export const Footer = () => {
     Staffarc
   </a>
 </p>
-
           </div>
         </div>
       </div>

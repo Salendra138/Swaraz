@@ -27,7 +27,6 @@ export const products: Product[] = [
     { id: '9', name: 'Three Mango Garam Masala', price: 55, image: categoryBlended, category: 'Blended Spices', weight: '100g', inStock: true },
     { id: '10', name: 'Three Mango Biryani Masala', price: 70, image: categoryBlended, category: 'Blended Spices', weight: '100g', inStock: true },
     { id: '13', name: 'Swaraz Compounded Hing', price: 45, image: categoryHing, category: 'Hing & Asafoetida', weight: '10g', inStock: true },
-    { id: '14', name: 'Three Mango Ginger Garlic Paste', price: 55, image: categoryPastes, category: 'Condiment & Cooking Pastes', weight: '200g', inStock: true },
     { id: '15', name: 'Swaraz Turmeric Powder', price: 24, image: categoryGroundSpices, category: 'Pure Grounded Spices', weight: '50g', inStock: true },
     { id: '16', name: 'Swaraz Kashmiri Chilli', price: 78, image: categoryGroundSpices, category: 'Pure Grounded Spices', weight: '100g', inStock: true },
 ];

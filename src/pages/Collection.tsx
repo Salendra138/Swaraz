@@ -52,15 +52,6 @@ const collectionsData: Record<string, { name: string; image: string; products: a
       { id: '5', name: 'Three Mango Sambar Powder', price: 50, image: categoryBlended, weight: '100g' },
     ],
   },
-  'condiment-cooking-pastes': {
-    name: 'Condiment & Cooking Pastes',
-    image: categoryPastes,
-    products: [
-      { id: '1', name: 'Three Mango Ginger Garlic Paste', price: 55, image: categoryPastes, weight: '200g' },
-      { id: '2', name: 'Three Mango Tamarind Paste', price: 45, image: categoryPastes, weight: '200g' },
-      { id: '3', name: 'Three Mango Green Chilli Paste', price: 40, image: categoryPastes, weight: '200g' },
-    ],
-  },
   'hing-asafoetida': {
     name: 'Hing & Asafoetida',
     image: categoryHing,
